@@ -10,13 +10,7 @@ npm install react-native-toggle
 
 ## Usage
 
-```js
-import { multiply } from 'react-native-toggle';
-
-// ...
-
-const result = await multiply(3, 7);
-```
+<!-- TODO -->
 
 ## Contributing
 
