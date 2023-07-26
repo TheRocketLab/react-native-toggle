@@ -155,5 +155,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "styled-components": "^6.0.5"
   }
 }
