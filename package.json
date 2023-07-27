@@ -1,5 +1,5 @@
 {
-  "name": "react-native-toggle",
+  "name": "rktlab-react-native-toggle",
   "version": "0.1.0",
   "description": "A custom React Native toggle component",
   "main": "lib/commonjs/index",
@@ -40,7 +40,10 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/TheRocketLab/react-native-toggle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheRocketLab/react-native-toggle.git"
+  },
   "author": "Matt Deal <matthew.deal@rocketlab.com.au> (https://www.rocketlab.com.au/)",
   "license": "MIT",
   "bugs": {
@@ -157,6 +160,11 @@
     ]
   },
   "dependencies": {
+    "rktlab-react-native-toggle": "^0.1.0",
     "styled-components": "^6.0.5"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
   }
 }
