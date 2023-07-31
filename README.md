@@ -39,12 +39,12 @@ export deafult function App(){
 | ----------------- | ----------- | ----------- |
 | onValueChange     | _function_  | Callback called when the toggle is pressed.|
 | value             | _boolean_   | The value of the toggle. If true the toggle will be turned on.|
-| offIcon           | _ReactNode_ | Pass a component to be rendered inside the toggles circle, example: offIcon={<Text>X</Text>}|
-| onIcon            | _ReactNode_ | Pass a component to be rendered inside the toggles circle, example: onIcon={<Text>✓</Text>}|
+| offIcon           | _ReactNode_ | Pass a component to be rendered inside the toggles circle, example: offIcon={`<Text> X </Text>`}|
+| onIcon            | _ReactNode_ | Pass a component to be rendered inside the toggles circle, example: onIcon={`<Text> ✓ </Text>`}|
 | labels            | _string[]_  | The label or labels of the toggle, this is passed as an array, if you have a label type of `both` you can have two labels|
-| labelType         | _string_    | This is the type of label. You can choose from these options: `'top' | 'left' | 'right' | 'both'` |
+| labelType         | _string_    | This is the type of label. You can choose from these options: `'top' 'left' 'right' 'both'` |
 | disabled          | _boolean_   | If passed the component will be set to a disabled state|
-| styleType         | _string_    | So far you can choose from two types of styles, `Material` or `Stock`|
+| styleType         | _string_    | So far you can choose from two types of styles, `Material` or `Stock`, if you do not choose a type, it will default to Material|
 | customTrackColor  | _object_    | This allows you to choose a custom style outside of the default styles for the toggle track bar.|
 | customCircleColor | _object_    | This allows you to choose a custom style outside of the default styles for the switch thumb.|            |
 
