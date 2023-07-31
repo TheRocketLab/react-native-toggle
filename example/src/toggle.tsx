@@ -61,7 +61,7 @@ const SwitchContainer = styled(Animated.View)<SwitchContainerProps>`
     /* material style */
     ${!active ? 'border: 1px #000 solid;' : 'border: 1px #6750a4 solid;'}
     padding: 13px;
-    width: 45px;
+    width: 52px;
 
   `}
   ${({ styleType }) =>
@@ -92,7 +92,7 @@ const Circle = styled(Animated.View)<CircleProps>`
     `
     /* material style */
     ${active ? 'background-color: #fff;' : 'background-color: #000;'};
-    top: ${(SWITCH_CONTAINER_HEIGHT + 2.5 * PADDING - CIRCLE_HEIGHT) / 2}px;
+    top: ${(SWITCH_CONTAINER_HEIGHT + 2 * PADDING - CIRCLE_HEIGHT) / 2}px;
     ${active ? 'margin-left: 2px' : 'margin-left: 5px'};
     ${!active ? 'top: 6px' : ''};
     ${!active ? 'width: 15px' : ''};
@@ -125,6 +125,8 @@ export default function Toggle({
   labels,
   labelType = 'top',
   styleType = 'material',
+  customTrackColor,
+  customCircleColor,
 }: ToggleProps) {
   const [active, setActive] = useState(value);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -145,7 +147,7 @@ export default function Toggle({
       shadowRadius: 3.84,
     },
     android: {
-      elevation: 1.5,
+      elevation: 2,
     },
   });
   const switchStyle = disabled ? disabledStyle : null;
@@ -164,19 +166,23 @@ export default function Toggle({
 
   const circleColor = circleColorAnim.interpolate({
     inputRange: [0, 1],
-    outputRange:
-      styleType === 'material'
-        ? ['rgba(0, 0, 0, 1)', 'rgba(255, 255, 255, 1)']
-        : ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
+    outputRange: customCircleColor
+      ? [customCircleColor.off, customCircleColor.on]
+      : styleType === 'material'
+      ? ['rgba(0, 0, 0, 1)', 'rgba(255, 255, 255, 1)']
+      : ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
   });
 
   const materialSwitchBackgroundColor =
     materialSwitchBackgroundAnim.interpolate({
       inputRange: [0, 1],
-      outputRange:
-        styleType === 'material'
-          ? ['rgb(231 224 236)', 'rgb(103 80 164)']
-          : ['rgb(177 172 183))', 'rgb(81 183 72)'],
+      outputRange: customTrackColor
+        ? [customTrackColor.off, customTrackColor.on]
+        : styleType === 'material'
+        ? ['rgb(231 224 236)', 'rgb(103 80 164)']
+        : disabled
+        ? ['rgb(195 190 208)', 'rgb(195 190 208)']
+        : ['rgb(177 172 183)', 'rgb(81 183 72)'],
     });
 
   const switchAnim = animatedValue.interpolate({

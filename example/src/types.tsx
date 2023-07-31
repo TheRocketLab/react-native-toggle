@@ -65,6 +65,23 @@ export type ToggleProps = {
    * Here active is a boolean value which comes from the state to
    * handle the toggle on and off.
    */
-  toggleBarColor?: string;
   styleType?: 'material' | 'stock' | 'bordered';
+  /**
+   * The color of trackbar when toggled.
+   *
+   *  ### Example
+   * ```jsx
+   * customTrackColor={{ on: 'blue', off: 'red' }}
+   * ```
+   */
+  customTrackColor?: { off: string; on: string };
+  /**
+   * The color of the toggle when it is toggled.
+   *
+   *  ### Example
+   * ```jsx
+   * customCircleColor={{ off: 'rgb(255, 255, 255)', on: 'rgb(0, 0, 0)' }}
+   * ```
+   */
+  customCircleColor?: { off: string; on: string };
 };
