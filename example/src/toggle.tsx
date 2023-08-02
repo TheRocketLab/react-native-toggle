@@ -89,7 +89,7 @@ export default function Toggle({
           }
         },
 
-        onPanResponderGrant: () => {
+        onPanResponderRelease: () => {
           if (!isAnimating) {
             setActive(!active);
           }
