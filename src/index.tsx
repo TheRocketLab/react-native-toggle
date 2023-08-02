@@ -1,120 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Animated,
-  Easing,
-  PanResponder,
-  Platform,
-  Pressable,
-} from 'react-native';
-import styled from 'styled-components/native';
+import { Animated, Easing, PanResponder, Pressable } from 'react-native';
 import type { ToggleProps } from './types';
-
-type disabledProps = {
-  disabled?: boolean;
-};
-
-type SwitchContainerProps = {
-  styleType?: string;
-  active?: boolean;
-};
-
-type CircleProps = disabledProps & { styleType?: string; active?: boolean };
-
-const CIRCLE_HEIGHT = 20;
-const CIRCLE_WIDTH = 20;
-const SMALL_CIRCLE_HEIGHT = 15;
-const SMALL_CIRCLE_WIDTH = 15;
-const SWITCH_CONTAINER_HEIGHT = 15;
-const PADDING = 5;
-
-const Container = styled.View<{ labelType?: string }>`
-  flex-direction: ${({ labelType }) =>
-    labelType === 'left' || labelType === 'right' || labelType === 'both'
-      ? 'row'
-      : 'column'};
-  justify-content: center;
-  align-items: center;
-`;
-
-const ContentContainer = styled.View<{ labelType?: string }>`
-  flex-direction: ${({ labelType }) =>
-    labelType === 'left' || labelType === 'right' || labelType === 'both'
-      ? 'row'
-      : 'column'};
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-`;
-
-const SwitchContainer = styled(Animated.View)<SwitchContainerProps>`
-  width: 40px;
-  height: ${SWITCH_CONTAINER_HEIGHT}px;
-  border-radius: ${SWITCH_CONTAINER_HEIGHT}px;
-  padding: ${PADDING}px;
-  justify-content: center;
-  align-items: center;
-
-  ${({ styleType, active }) =>
-    styleType === 'material' &&
-    `
-    /* material style */
-    ${!active ? 'border: 1px #000 solid;' : 'border: 1px #6750a4 solid;'}
-    padding: 13px;
-    width: 45px;
-
-  `}
-  ${({ styleType }) =>
-    styleType === 'stock' &&
-    `
-    /* stock style */
-
-
-  `}
-${({ styleType }) =>
-    styleType === 'bordered' &&
-    `
-    /* bordered style */
-  `}
-`;
-
-const Circle = styled(Animated.View)<CircleProps>`
-  width: ${CIRCLE_WIDTH}px;
-  height: ${CIRCLE_HEIGHT}px;
-  border-radius: ${CIRCLE_HEIGHT / 2}px;
-  background-color: ${({ disabled }: any) => (disabled ? 'gray' : '#f0eef0')};
-  position: absolute;
-  top: ${Platform.OS === 'ios' ? '-1px' : '-2px'};
-  justify-content: center;
-  align-items: center;
-  ${({ styleType, active }) =>
-    styleType === 'material' &&
-    `
-    /* material style */
-    ${active ? 'background-color: #fff;' : 'background-color: #000;'};
-    top: ${(SWITCH_CONTAINER_HEIGHT + 2.5 * PADDING - CIRCLE_HEIGHT) / 2}px;
-    ${active ? 'margin-left: 2px' : 'margin-left: 5px'};
-    ${!active ? 'top: 6px' : ''};
-    ${!active ? 'width: 15px' : ''};
-  `}
-  ${({ styleType }) =>
-    styleType === 'stock' &&
-    `
-    /* stock style */
-  `}
-${({ styleType }) =>
-    styleType === 'bordered' &&
-    `
-    /* bordered style */
-  `}
-`;
-
-const Label = styled.Text<disabledProps>`
-  font-size: 14px;
-  font-weight: 400;
-  text-align: center;
-  color: ${({ disabled }: any) => (disabled ? 'gray' : 'black')};
-`;
+import {
+  CIRCLE_HEIGHT,
+  CIRCLE_WIDTH,
+  Circle,
+  Container,
+  ContentContainer,
+  Label,
+  SMALL_CIRCLE_HEIGHT,
+  SMALL_CIRCLE_WIDTH,
+  SwitchContainer,
+  disabledStyle,
+  shadowStyle,
+} from './styledComponents';
 
 export default function Toggle({
   onValueChange,
@@ -125,6 +24,8 @@ export default function Toggle({
   labels,
   labelType = 'top',
   styleType = 'material',
+  customTrackColor,
+  customCircleColor,
 }: ToggleProps) {
   const [active, setActive] = useState(value);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -134,25 +35,11 @@ export default function Toggle({
     labelType === 'both' ||
     labelType === 'top';
 
-  // STYLES
-
-  const disabledStyle = { backgroundColor: 'lightgray' };
-  const shadowStyle = Platform.select({
-    ios: {
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-    },
-    android: {
-      elevation: 1.5,
-    },
-  });
-  const switchStyle = disabled ? disabledStyle : null;
+  const switchDisabledStyle = disabled ? disabledStyle : null;
 
   // ANIMATIONS
-
   const animatedValue = useRef(new Animated.Value(value ? 1 : 0)).current;
+  const materialSwitchBackgroundAnim = useRef(new Animated.Value(0)).current;
   const circleColorAnim = useRef(new Animated.Value(0)).current;
   const heightAnim = useRef(
     new Animated.Value(active ? CIRCLE_HEIGHT : SMALL_CIRCLE_HEIGHT)
@@ -160,23 +47,26 @@ export default function Toggle({
   const widthAnim = useRef(
     new Animated.Value(active ? CIRCLE_WIDTH : SMALL_CIRCLE_WIDTH)
   ).current;
-  const materialSwitchBackgroundAnim = useRef(new Animated.Value(0)).current;
 
   const circleColor = circleColorAnim.interpolate({
     inputRange: [0, 1],
-    outputRange:
-      styleType === 'material'
-        ? ['rgba(0, 0, 0, 1)', 'rgba(255, 255, 255, 1)']
-        : ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
+    outputRange: customCircleColor
+      ? [customCircleColor.off, customCircleColor.on]
+      : styleType === 'material'
+      ? ['rgba(0, 0, 0, 1)', 'rgba(255, 255, 255, 1)']
+      : ['rgba(255, 255, 255, 1)', 'rgba(255, 255, 255, 1)'],
   });
 
   const materialSwitchBackgroundColor =
     materialSwitchBackgroundAnim.interpolate({
       inputRange: [0, 1],
-      outputRange:
-        styleType === 'material'
-          ? ['rgb(231 224 236)', 'rgb(103 80 164)']
-          : ['rgb(177 172 183))', 'rgb(81 183 72)'],
+      outputRange: customTrackColor
+        ? [customTrackColor.off, customTrackColor.on]
+        : styleType === 'material'
+        ? ['rgb(231 224 236)', 'rgb(103 80 164)']
+        : disabled
+        ? ['rgb(195 190 208)', 'rgb(195 190 208)']
+        : ['rgb(177 172 183)', 'rgb(81 183 72)'],
     });
 
   const switchAnim = animatedValue.interpolate({
@@ -200,7 +90,7 @@ export default function Toggle({
 
   useEffect(() => {
     if (!isAnimating) {
-      setIsAnimating(true); // Add this line here.
+      setIsAnimating(true);
       Animated.parallel([
         Animated.timing(circleColorAnim, {
           toValue: active ? 1 : 0,
@@ -252,7 +142,7 @@ export default function Toggle({
           <SwitchContainer
             styleType={styleType}
             style={[
-              switchStyle,
+              switchDisabledStyle,
               { backgroundColor: materialSwitchBackgroundColor },
             ]}
             active={active}

@@ -54,7 +54,6 @@ export default function App() {
           onValueChange={onValueChange3}
           value={active3}
           labels={['Toggle with custom Icon']}
-          offIcon={<Text style={iconStyle}>X</Text>}
           onIcon={<Text>✓</Text>}
           styleType="material"
         />

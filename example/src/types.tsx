@@ -85,3 +85,14 @@ export type ToggleProps = {
    */
   customCircleColor?: { off: string; on: string };
 };
+
+export type disabledProps = {
+  disabled?: boolean;
+};
+
+export type SwitchContainerProps = {
+  styleType?: string;
+  active?: boolean;
+};
+
+export type CircleProps = disabledProps & SwitchContainerProps;
