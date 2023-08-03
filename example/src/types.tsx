@@ -1,3 +1,5 @@
+import type { TextStyle } from 'react-native';
+
 export type ToggleProps = {
   /**
    * Callback called when the toggle is pressed.
@@ -52,6 +54,26 @@ export type ToggleProps = {
    * Note: if you don't choose a labelType, the label will be on top
    * */
   labelType?: 'top' | 'left' | 'right' | 'both';
+  /**
+   * The styles for the label or labels of the toggle.
+   * These styles will be applied to the corresponding labels in the order they are provided.
+   * If a single style object is provided, it will be applied to all labels.
+   * If an array of style objects is provided, they will be applied to the corresponding labels
+   * in the order they are provided. For example, the first style object in the array will be applied
+   * to the first label, the second to the second label, and so on.
+   * If there are more labels than style objects, the additional labels will not receive any custom styles.
+   *
+   * @default undefined
+   * #### Example
+   * ```jsx
+   * // Single style for all labels
+   * <Toggle labels={['off', 'on']} labelStyles={{color: 'red', fontSize: 16}} />
+   *
+   * // Different styles for each label
+   * <Toggle labels={['off', 'on']} labelStyles={[{color: 'red', fontSize: 16}, {color: 'blue', fontSize: 20}]} />
+   * ```
+   */
+  labelStyles?: TextStyle | TextStyle[];
   disabled?: boolean;
   /**
    * The color of the toggle when it is turned on.
@@ -84,6 +106,7 @@ export type ToggleProps = {
    * ```
    */
   customCircleColor?: { off: string; on: string };
+  customFont?: string;
 };
 
 export type disabledProps = {

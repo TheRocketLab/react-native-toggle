@@ -39,6 +39,8 @@ export default function App() {
     fontSize: 24,
   };
 
+  const customLabelStyle = [{ marginRight: 100 }];
+
   return (
     <View>
       <Spacer>
@@ -68,6 +70,7 @@ export default function App() {
           value={active}
           labels={['Left label']}
           labelType="left"
+          labelStyles={customLabelStyle}
         />
         <Toggle
           onValueChange={onValueChange}

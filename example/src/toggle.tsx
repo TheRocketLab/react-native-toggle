@@ -26,6 +26,8 @@ export default function Toggle({
   styleType = 'material',
   customTrackColor,
   customCircleColor,
+  customFont,
+  labelStyles,
 }: ToggleProps) {
   const [active, setActive] = useState(value);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -138,6 +140,10 @@ export default function Toggle({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
+  const labelStylesArray = Array.isArray(labelStyles)
+    ? labelStyles
+    : [labelStyles];
+
   return (
     <Container labelType={labelType}>
       <Pressable
@@ -146,7 +152,15 @@ export default function Toggle({
       >
         <ContentContainer labelType={labelType}>
           {labelPlacement ? (
-            <Label disabled={disabled}>{labels ? labels[0] : null}</Label>
+            <Label
+              disabled={disabled}
+              style={[
+                { fontFamily: customFont },
+                labelStyles && labelStylesArray,
+              ]}
+            >
+              {labels ? labels[0] : null}
+            </Label>
           ) : null}
 
           <SwitchContainer
@@ -176,10 +190,26 @@ export default function Toggle({
           </SwitchContainer>
 
           {labelType === 'both' ? (
-            <Label disabled={disabled}> {labels ? labels[1] : null} </Label>
+            <Label
+              disabled={disabled}
+              style={[
+                { fontFamily: customFont },
+                labelStyles && labelStylesArray,
+              ]}
+            >
+              {labels ? labels[1] : null}
+            </Label>
           ) : null}
           {labelType === 'right' ? (
-            <Label disabled={disabled}>{labels ? labels[0] : null}</Label>
+            <Label
+              disabled={disabled}
+              style={[
+                { fontFamily: customFont },
+                labelStyles && labelStylesArray,
+              ]}
+            >
+              {labels ? labels[0] : null}
+            </Label>
           ) : null}
         </ContentContainer>
       </Pressable>

@@ -49,8 +49,32 @@ export deafult function App(){
 | customCircleColor | _object_    | This allows you to choose a custom style outside of the default styles for the switch thumb.|            |
 
 
+Certainly, here is a quick example that you might use as a starting point for your documentation:
+
+## Custom Fonts
+
+Our Toggle component supports the usage of custom fonts. To apply a custom font, you will need to pass the font family name to the customFont prop of the Toggle component.
+
+```jsx
+<Toggle
+  ...
+  customFont='Your-Custom-Font-Name'
+/>
+```
+
+Please note, the customFont prop accepts a string that should exactly match the name of the font that you've imported into your project. Font names often include spaces and are case sensitive.
+
+How to Import a Font into Your Project
+You will have to import and link your custom font files in your project manually as per the standard React Native process. Please refer to the official React Native documentation on how to use custom fonts for detailed steps.
+
+Remember, our Toggle component does not ship with any font files due to licensing restrictions, so it's the user's responsibility to handle the importing and linking of any font files they wish to use.
 
 # Examples:
+We currently have two working styles
+
+ - Material
+ - Stock
+
 ## Material
 - This is a toggle with both labels<br>
   ![Alt text](image.png)
