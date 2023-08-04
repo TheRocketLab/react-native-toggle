@@ -8,7 +8,7 @@ export const SMALL_CIRCLE_HEIGHT = 15;
 export const SMALL_CIRCLE_WIDTH = 15;
 export const SWITCH_CONTAINER_HEIGHT = 15;
 export const PADDING = 5;
-export const disabledStyle = { backgroundColor: 'lightgray', opacity: 0.5 };
+export const disabledStyle = { backgroundColor: 'lightgray' };
 export const shadowStyle = Platform.select({
   ios: {
     shadowColor: '#000',
@@ -21,12 +21,17 @@ export const shadowStyle = Platform.select({
   },
 });
 
-export function getSwitchContainerStyles(styleType: string, active: boolean) {
+export function getSwitchContainerStyles(
+  styleType: string,
+  active: boolean,
+  disable: boolean
+) {
   switch (styleType) {
     case 'material':
       return `
         /* material style */
         ${!active ? 'border: 1px #000 solid;' : 'border: 1px #6750a4 solid;'}
+        ${disable ? 'border: 1px #c3c6d0 solid;' : ''}
         padding: 13px;
         width: 52px;
       `;
@@ -48,7 +53,7 @@ export function getCircleStyles(styleType: string, active: boolean) {
     case 'material':
       return `
         /* material style */
-        ${active ? 'background-color: #fff;' : 'background-color: #000;'};
+        ${active ? 'background-color: #fff;' : 'background-color: #dbdfe5;'};
         top: ${(SWITCH_CONTAINER_HEIGHT + 2 * PADDING - CIRCLE_HEIGHT) / 2}px;
         ${active ? 'margin-left: 2px' : 'margin-left: 5px'};
         ${!active ? 'top: 6px; width: 15px' : ''};
@@ -93,15 +98,18 @@ export const SwitchContainer = styled(Animated.View)<SwitchContainerProps>`
   padding: ${PADDING}px;
   justify-content: center;
   align-items: center;
-  ${({ styleType, active }) =>
-    getSwitchContainerStyles(styleType as string, active as boolean)}
+  ${({ styleType, active, disabled }) =>
+    getSwitchContainerStyles(
+      styleType as string,
+      active as boolean,
+      disabled as boolean
+    )}
 `;
 
 export const Circle = styled(Animated.View)<CircleProps>`
   width: ${CIRCLE_WIDTH}px;
   height: ${CIRCLE_HEIGHT}px;
   border-radius: ${CIRCLE_HEIGHT / 2}px;
-  background-color: ${({ disabled }: any) => (disabled ? 'gray' : '#f0eef0')};
   position: absolute;
   top: ${Platform.OS === 'ios' ? '-1px' : '-2px'};
   justify-content: center;

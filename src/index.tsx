@@ -52,7 +52,9 @@ export default function Toggle({
 
   const circleColor = circleColorAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: customCircleColor
+    outputRange: disabled
+      ? ['rgb(195 198 208)', 'rgb(195 198 208)']
+      : customCircleColor
       ? [customCircleColor.off, customCircleColor.on]
       : styleType === 'material'
       ? ['rgba(0, 0, 0, 1)', 'rgba(255, 255, 255, 1)']
@@ -62,13 +64,13 @@ export default function Toggle({
   const materialSwitchBackgroundColor =
     materialSwitchBackgroundAnim.interpolate({
       inputRange: [0, 1],
-      outputRange: customTrackColor
+      outputRange: disabled
+        ? ['rgb(224 227 238)', 'rgb(224 227 238)']
+        : customTrackColor
         ? [customTrackColor.off, customTrackColor.on]
         : styleType === 'material'
-        ? ['rgb(231 224 236)', 'rgb(103 80 164)']
-        : disabled
-        ? ['rgb(195 190 208)', 'rgb(195 190 208)']
-        : ['rgb(177 172 183)', 'rgb(81 183 72)'],
+        ? ['rgba(255, 255, 255, 1)', 'rgb(103, 80, 164)']
+        : ['rgb(177, 172, 183)', 'rgb(81, 183, 72)'],
     });
 
   const switchAnim = animatedValue.interpolate({
@@ -84,6 +86,7 @@ export default function Toggle({
         onPanResponderMove: (_, gestureState) => {
           gestureState.dx > 0 ? setActive(true) : setActive(false);
         },
+
         onPanResponderRelease: () => {
           if (!isAnimating) {
             setActive(!active);
@@ -157,6 +160,7 @@ export default function Toggle({
           ) : null}
 
           <SwitchContainer
+            disabled={disabled}
             styleType={styleType}
             style={[
               switchDisabledStyle,
