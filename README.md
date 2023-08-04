@@ -1,3 +1,9 @@
+
+This package was sponsored by Rocket Lab.
+
+Check them out here if you have web or mobile application development needs: https://www.rocketlab.com.au/
+![Rocket Lab Logo](https://i.imgur.com/Fh9xG5M.png)
+
 # rktlab-react-native-toggle
 
 A custom React Native toggle component
@@ -17,7 +23,7 @@ yarn add rktlab-react-native-toggle
 
 To use this toggle component, import the toggle component into your React Native project
 
-The toggle has two required properties, there are
+The toggle has two required properties, they are:
 
 - `onValueChange`: Callback called when the toggle is pressed.
 - `value`: Boolean to set the initial value of the toggle.
@@ -34,6 +40,7 @@ export deafult function App(){
   )
 }
 ```
+## Table of Contents
 
 | Properties        | Type        | Description |
 | ----------------- | ----------- | ----------- |
@@ -46,10 +53,7 @@ export deafult function App(){
 | disabled          | _boolean_   | If passed the component will be set to a disabled state|
 | styleType         | _string_    | So far you can choose from two types of styles, `Material` or `Stock`, if you do not choose a type, it will default to Material|
 | customTrackColor  | _object_    | This allows you to choose a custom style outside of the default styles for the toggle track bar.|
-| customCircleColor | _object_    | This allows you to choose a custom style outside of the default styles for the switch thumb.|            |
-
-
-Certainly, here is a quick example that you might use as a starting point for your documentation:
+| customCircleColor | _object_    | This allows you to choose a custom style outside of the default styles for the switch thumb.|
 
 ## Custom Fonts
 
@@ -64,9 +68,6 @@ Our Toggle component supports the usage of custom fonts. To apply a custom font,
 
 Please note, the customFont prop accepts a string that should exactly match the name of the font that you've imported into your project. Font names often include spaces and are case sensitive.
 
-How to Import a Font into Your Project
-You will have to import and link your custom font files in your project manually as per the standard React Native process. Please refer to the official React Native documentation on how to use custom fonts for detailed steps.
-
 Remember, our Toggle component does not ship with any font files due to licensing restrictions, so it's the user's responsibility to handle the importing and linking of any font files they wish to use.
 
 # Examples:
@@ -77,19 +78,19 @@ We currently have two working styles
 
 ## Material
 - This is a toggle with both labels<br>
-  ![Alt text](image.png)
+  ![Alt text](images/image.png)
 - This is a disabled toggle with a top label<br>
-  ![Alt text](image-2.png)
+![Alt text](images/image-2.png)
 - This is a toggle with custom on and off icons<br>
-  ![Alt text](image-3.png)
+  ![Alt text](images/image-3.png)
 - This is a toggle with a custom track and circle color<br>
-  ![Alt text](image-4.png)
+  ![Alt text](images/image-4.png)
 
 ## Stock
 - This is a stock toggle with both labels<br>
-![Alt text](image-5.png)
+![Alt text](images/image-5.png)
 - This is a disabled stock toggle<br>
-![Alt text](image-8.png)
+![Alt text](images/image-8.png)
 
 
 
@@ -105,3 +106,5 @@ MIT
 ---
 
 Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+
+ sponsored by [Rocket Lab](https://www.rocketlab.com.au/).

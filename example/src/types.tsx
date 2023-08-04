@@ -87,7 +87,7 @@ export type ToggleProps = {
    * Here active is a boolean value which comes from the state to
    * handle the toggle on and off.
    */
-  styleType?: 'material' | 'stock' | 'bordered';
+  styleType?: 'material' | 'stock' | 'mock';
   /**
    * The color of trackbar when toggled.
    *
@@ -106,6 +106,14 @@ export type ToggleProps = {
    * ```
    */
   customCircleColor?: { off: string; on: string };
+  /**
+   * This can take a font name which is available in your project.
+   * ### Example
+   * ```jsx
+   * customFont="Roboto"
+   * ```
+   * Here Roboto is a font name which is available in the project.
+   * */
   customFont?: string;
 };
 
@@ -116,6 +124,7 @@ export type disabledProps = {
 export type SwitchContainerProps = {
   styleType?: string;
   active?: boolean;
+  disabled?: boolean;
 };
 
 export type CircleProps = disabledProps & SwitchContainerProps;

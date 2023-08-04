@@ -4,12 +4,12 @@ import type { ToggleProps } from './types';
 import {
   CIRCLE_HEIGHT,
   CIRCLE_WIDTH,
+  SMALL_CIRCLE_HEIGHT,
+  SMALL_CIRCLE_WIDTH,
   Circle,
   Container,
   ContentContainer,
   Label,
-  SMALL_CIRCLE_HEIGHT,
-  SMALL_CIRCLE_WIDTH,
   SwitchContainer,
   disabledStyle,
   shadowStyle,
@@ -17,7 +17,7 @@ import {
 
 export default function Toggle({
   onValueChange,
-  value = false,
+  value,
   onIcon,
   offIcon,
   disabled,
@@ -26,6 +26,8 @@ export default function Toggle({
   styleType = 'material',
   customTrackColor,
   customCircleColor,
+  customFont,
+  labelStyles,
 }: ToggleProps) {
   const [active, setActive] = useState(value);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -79,7 +81,10 @@ export default function Toggle({
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => !disabled && !isAnimating,
-        onPanResponderGrant: () => {
+        onPanResponderMove: (_, gestureState) => {
+          gestureState.dx > 0 ? setActive(true) : setActive(false);
+        },
+        onPanResponderRelease: () => {
           if (!isAnimating) {
             setActive(!active);
           }
@@ -122,11 +127,15 @@ export default function Toggle({
         }),
       ]).start(() => {
         setIsAnimating(false);
-        onValueChange(active);
+        onValueChange(active as boolean);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
+
+  const labelStylesArray = Array.isArray(labelStyles)
+    ? labelStyles
+    : [labelStyles];
 
   return (
     <Container labelType={labelType}>
@@ -136,7 +145,15 @@ export default function Toggle({
       >
         <ContentContainer labelType={labelType}>
           {labelPlacement ? (
-            <Label disabled={disabled}>{labels ? labels[0] : null}</Label>
+            <Label
+              disabled={disabled}
+              style={[
+                { fontFamily: customFont },
+                labelStyles && labelStylesArray,
+              ]}
+            >
+              {labels ? labels[0] : null}
+            </Label>
           ) : null}
 
           <SwitchContainer
@@ -166,10 +183,26 @@ export default function Toggle({
           </SwitchContainer>
 
           {labelType === 'both' ? (
-            <Label disabled={disabled}> {labels ? labels[1] : null} </Label>
+            <Label
+              disabled={disabled}
+              style={[
+                { fontFamily: customFont },
+                labelStyles && labelStylesArray,
+              ]}
+            >
+              {labels ? labels[1] : null}
+            </Label>
           ) : null}
           {labelType === 'right' ? (
-            <Label disabled={disabled}>{labels ? labels[0] : null}</Label>
+            <Label
+              disabled={disabled}
+              style={[
+                { fontFamily: customFont },
+                labelStyles && labelStylesArray,
+              ]}
+            >
+              {labels ? labels[0] : null}
+            </Label>
           ) : null}
         </ContentContainer>
       </Pressable>
